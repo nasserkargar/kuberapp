@@ -1,0 +1,28 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: apple-app
+  labels:
+    app: apple
+spec:
+  containers:
+    - name: apple-app
+      imagePullPolicy: IfNotPresent
+      image: hashicorp/http-echo
+      ports:
+        - containerPort: 5678
+      args:
+        - "-text=apple"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-service
+spec:
+  selector:
+    app: apple
+  ports:
+    - name: http
+      protocol: TCP
+      port: 5678
+      targetPort: 5678
